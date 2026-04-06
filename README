@@ -1,0 +1,73 @@
+🏦 Hệ thống Kho Dữ liệu & Phân tích Rủi ro cho Ngân hàng Số
+
+
+🎯 Tổng quan dự án
+Đây là dự án mô phỏng một hệ thống dữ liệu ngân hàng hoàn chỉnh, được xây dựng từ đầu đến cuối với mục tiêu ứng tuyển vào các vị trí Data Analyst, Data Engineer tại các công ty lớn như KPMG và các ngân hàng.
+
+Dự án tập trung vào việc xây dựng một Kho dữ liệu (Data Warehouse) và phát triển các báo cáo phân tích Rủi ro Tín dụng và Phát hiện Gian lận.
+
+🚀 Các Bài toán Nghiệp vụ đã Giải quyết
+Dự án này không chỉ là xây dựng database, mà còn giải quyết 4 bài toán thực tế mà mọi ngân hàng đều phải đối mặt:
+
+💸 1. Phát hiện Giao dịch Gian lận (Fraud Detection)
+Mục tiêu: Tìm ra các giao dịch đáng ngờ để bảo vệ khách hàng và ngân hàng.
+
+Cách làm: Viết câu lệnh SQL tự động quét và "tóm" được những giao dịch có giá trị cực lớn (> 500 triệu VNĐ) hoặc diễn ra vào khung giờ bất thường (đêm khuya, 11h đêm - 4h sáng).
+
+📉 2. Phân loại Nợ xấu (NPL - Non-Performing Loan)
+Mục tiêu: Đánh giá sức khỏe của danh mục cho vay.
+
+Cách làm: Tự động tính toán số ngày quá hạn (DPD) của từng khoản vay và phân loại chúng vào 5 nhóm nợ theo đúng chuẩn của Ngân hàng Nhà nước. Báo cáo này giúp ban lãnh đạo biết được tỷ lệ nợ xấu đang là bao nhiêu %.
+
+🚨 3. Hệ thống Cảnh báo sớm (Early Warning Signal - EWS)
+Mục tiêu: Phát hiện sớm các khách hàng có dấu hiệu rủi ro trước khi họ "bùng" nợ.
+
+Cách làm: Sử dụng kỹ thuật SQL nâng cao (Window Functions) để tìm ra những khách hàng có hành vi bất thường, ví dụ như rút tiền ồ ạt liên tục trong một thời gian ngắn.
+
+✅ 4. Kiểm soát Chất lượng Dữ liệu (Data Governance)
+Mục tiêu: Đảm bảo dữ liệu trong hệ thống luôn chính xác và đáng tin cậy.
+
+Cách làm: Xây dựng các quy tắc để "soi" lỗi dữ liệu, ví dụ như tìm ra các khách hàng có tuổi không hợp lệ hoặc dữ liệu bị trùng lặp, đảm bảo tính toàn vẹn cho báo cáo.
+
+🛠️ Công nghệ Sử dụng
+Cơ sở dữ liệu: PostgreSQL
+
+Ngôn ngữ truy vấn: SQL (Sử dụng các kỹ thuật nâng cao như CTE, Window Functions)
+
+Tạo dữ liệu: Python (Thư viện: Pandas, Faker, SQLAlchemy)
+
+Công cụ quản lý: DBeaver (Phân tích) & PyCharm (Lập trình)
+
+🏛️ Kiến trúc Hệ thống
+Dự án được thiết kế theo kiến trúc 4 lớp dữ liệu chuẩn của ngành Ngân hàng:
+[Python tạo dữ liệu] -> [Lớp 1: Staging] -> [Lớp 2: Data Warehouse] -> [Lớp 3: Data Marts] -> [Báo cáo & Phân tích]
+
+Lớp 1 - Staging (Dữ liệu thô): Nơi tiếp nhận dữ liệu giao dịch hằng ngày.
+
+Lớp 2 - Data Warehouse (Kho dữ liệu tập trung): Dữ liệu được làm sạch, biến đổi và sắp xếp theo mô hình ngôi sao (Star Schema) để tối ưu tốc độ truy vấn.
+
+Lớp 3 - Data Mart (Kho dữ liệu chuyên biệt): Các "kho con" được tách ra để phục vụ riêng cho các phòng ban như phòng Rủi ro, phòng Kinh doanh.
+
+(Để xem chi tiết sơ đồ, vui lòng xem ảnh ERD trong thư mục images.)
+
+📂 Cấu trúc Repo
+data_generator.py: Script Python để tạo ra hơn 50,000 khách hàng và 500,000 giao dịch.
+
+sql_scripts/: Thư mục chứa các file SQL cho từng nghiệp vụ:
+
+01_ETL_Pipeline.sql: Code nạp dữ liệu vào kho Data Warehouse.
+
+02_Fraud_Detection.sql: Code phân tích giao dịch gian lận.
+
+03_Credit_Risk.sql: Code phân tích nợ xấu.
+
+04_Governance_EWS.sql: Code kiểm toán và cảnh báo sớm.
+
+Cách sử dụng:
+Cài đặt PostgreSQL, PyCharm, DBeaver.
+
+Chạy file data_generator.py để tạo dữ liệu.
+
+Chạy các file .sql trong thư mục sql_scripts theo thứ tự trong DBeaver.
+
+Tác giả: Lê Nguyên Khôi
