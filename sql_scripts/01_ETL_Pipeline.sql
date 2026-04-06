@@ -1,30 +1,14 @@
--- Tạo bảng khách hàng
-CREATE TABLE staging.customers (
-    customer_id SERIAL PRIMARY KEY,
-    full_name VARCHAR(100),
-    dob DATE,
-    id_card VARCHAR(20),
-    address TEXT,
-    income_level DECIMAL(15, 2),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+-- 1. Lớp chứa dữ liệu thô đẩy từ Python vào
+CREATE SCHEMA staging; 
 
--- Tạo bảng tài khoản
-CREATE TABLE staging.accounts (
-    account_id SERIAL PRIMARY KEY,
-    customer_id INT REFERENCES staging.customers(customer_id),
-    account_number VARCHAR(20) UNIQUE,
-    account_type VARCHAR(20),
-    balance DECIMAL(15, 2),
-    status VARCHAR(10)
-);
+-- 2. Lớp kho dữ liệu trung tâm (Data Warehouse)
+CREATE SCHEMA dw; 
 
--- Tạo bảng giao dịch
-CREATE TABLE staging.transactions (
-    transaction_id SERIAL PRIMARY KEY,
-    account_id INT REFERENCES staging.accounts(account_id),
-    transaction_date TIMESTAMP,
-    amount DECIMAL(15, 2),
-    transaction_type VARCHAR(20),
-    ip_address VARCHAR(45)
-);
+-- 3. Lớp dữ liệu phục vụ báo cáo rủi ro và kinh doanh (Data Mart)
+CREATE SCHEMA mart; 
+
+-- 4. Lớp kiểm soát chất lượng dữ liệu (Data Quality/Audit)
+CREATE SCHEMA audit; 
+
+-- Kiểm tra xem đã có đủ 4 schema chưa
+SELECT schema_name FROM information_schema.schemata;
